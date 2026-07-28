@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
-
 import dbConnect from "./config/dbConfig.js";
-
+import usersRoute from "./routes/users.route.js";
+import tasksRoute from "./routes/tasks.route.js";
 dotenv.config();
 
 dbConnect();
@@ -10,9 +10,15 @@ dbConnect();
 const app = express()
 const port = 3000
 
-app.get('/helo', (req, res) => {
+app.use(express.json());
+
+app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.use("/users", usersRoute);
+app.use("/tasks", tasksRoute);
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
